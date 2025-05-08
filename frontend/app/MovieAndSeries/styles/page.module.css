@@ -1,0 +1,93 @@
+.backgroundWrapper {
+  background-color: #000; /* atau gambar/background global */
+  min-height: 100vh;
+  padding: 0rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.contentWrapper {
+  background-color: #121212; /* container utama */
+  max-width: 1440px;
+  width: 100%;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.containerWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: #000;
+  overflow-x: hidden; /* prevent horizontal scroll */
+}
+
+.pageContainer {
+  width: 100%;
+  max-width: 1440px;
+}
+
+.container {
+  background-color: #121212;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.wrapper {
+  max-width: 1280px;
+  margin: 0 auto 1.5rem auto; /* added bottom margin for spacing between genres */
+  padding: 1rem;
+  width: 100%;
+  background-color: #1f1f1f;
+  border-left: 0.5px solid #ff0000;
+  border-right: 0.5px solid #ff0000;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  text-align: center;
+  color: #ffffff;
+}
+
+.backButton {
+  background-color: #e50914;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.backButton:hover {
+  background-color: #b0060f;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .wrapper {
+    padding: 0.75rem;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    margin-bottom: 1rem; /* added bottom margin for mobile */
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+}

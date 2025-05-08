@@ -1,0 +1,58 @@
+# Test submitting a valid film rating
+POST http://localhost:8000/api/user/submitRating
+Content-Type: application/json
+
+{
+  "userId": 13,
+  "filmId": 42,
+  "rating": 3
+}
+
+# Test submitting a valid series rating
+POST http://localhost:8000/api/user/submitRating
+Content-Type: application/json
+
+{
+  "userId": 4,
+  "seriesId": 42,
+  "rating": 6
+}
+
+# Test submitting an invalid rating (out of range)
+POST http://localhost:8000/api/user/submitRating
+Content-Type: application/json
+
+{
+  "userId": 6,
+  "filmId": 42,
+  "rating": 8
+}
+
+# Test submitting a rating for a non-existent film
+POST http://localhost:8000/api/user/submitRating
+Content-Type: application/json
+
+{
+  "userId": 10,
+  "filmId": 42,
+  "rating": 4
+}
+
+# Test submitting a rating for a non-existent series
+POST http://localhost:8000/api/user/submitRating
+Content-Type: application/json
+
+{
+  "userId": 11,
+  "seriesId": 42,
+  "rating": 2
+}
+
+# Test submitting a rating without userId
+POST http://localhost:8000/api/user/submitRating
+Content-Type: application/json
+
+{
+  "filmId": 1,
+  "rating": 4
+}

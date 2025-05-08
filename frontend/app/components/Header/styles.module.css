@@ -1,0 +1,351 @@
+.header {
+    width: 100%;
+    position: sticky;
+    box-sizing: border-box;
+    top: 0;
+    background-color: #1a1919d5;
+    z-index: 50;
+  }
+  
+  .container {
+    max-width: 1400px; /* atau 1024px, sesuai selera */
+    margin: 0 auto;
+    padding: 0.5rem 0rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .logo {
+    color: #e50914;
+    font-size: 1.875rem; /* text-3xl */
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    margin-left: 1rem;
+  }
+  
+  .hamburger {
+    display: none;
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1010;
+    position: relative;
+  }
+  
+  .nav {
+    flex: 1;
+    margin-left: 1.5rem;
+  }
+  
+  .navList {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navList li a,
+  .navList li button {
+    color: white;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .relative {
+    position: relative;
+  }
+  
+  .dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(20, 20, 20, 0.9); /* unified background */
+    color: rgb(255, 255, 255);
+    border-radius: 0.25rem;
+    margin-top: 0.5rem;
+    z-index: 1010;
+    width: auto;
+    min-width: 8rem;
+    max-width: 40rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7); /* unified box-shadow */
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    max-height: 280px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  }
+  
+  /* Added scroll styles for mobile genre dropdown */
+  .mobileGenreDropdown {
+    background-color: #141414;
+    position: absolute;
+    width: 100%;
+    max-height: 300px; /* Set a fixed height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    z-index: 10;
+    border-radius: 0.25rem; /* unified border-radius */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7); /* unified box-shadow */
+  }
+  
+  .mobileGenreDropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .mobileGenreDropdown li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .mobileGenreLink {
+    display: block;
+    padding: 12px 16px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.2s;
+  }
+  
+  /* Add smooth scrolling for better UX */
+  .mobileGenreDropdown {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  }
+  
+  .mobileGenreDropdown::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .mobileGenreDropdown::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+  }
+  
+  .mobileGenreDropdown::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .dropdown::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .dropdown::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+  }
+  
+  .dropdown::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .dropdownHistory {
+    max-height: 250px;
+    overflow-y: auto;
+    width: 20rem;
+    background-color: #141414; /* Netflix dark background */
+    color: white;
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+    padding: 0.5rem 0;
+    z-index: 1010;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    display: block; /* changed from flex to block for vertical list */
+  }
+  
+  .dropdownHistory::-webkit-scrollbar {
+    display: block; /* Safari and Chrome */
+    width: 6px;
+  }
+  
+  .dropdownHistory::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+  }
+  
+  .dropdownHistory::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .dropdown li a {
+    display: block;
+    padding: 0.25rem 0.75rem;
+    text-decoration: none;
+    color: rgb(255, 251, 251);
+    white-space: nowrap;
+  }
+  
+  .genreColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 6rem;
+  }
+  
+  .dropdown li a:hover {
+    background: #2b2a2a;
+  }
+  
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-right: 1rem;
+  }
+  
+  .searchBox {
+    color: white;
+    border: 1px solid white;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    display: flex;
+    background: transparent;
+    width: 100%;
+  }
+  
+  .profile {
+    position: relative;
+  }
+  
+  .avatar {
+    width: 64px;
+    height: 35px;
+    border-radius: 9999px;
+    border: 2px solid white;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  
+  .profileDropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: rgba(20, 20, 20, 0.9); /* unified background */
+    color: rgb(255, 255, 255); /* changed from black to white */
+    border-radius: 0.25rem;
+    margin-top: 0.5rem;
+    z-index: 1010;
+    width: 10rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7); /* unified box-shadow */
+  }
+  
+  .profileDropdown li a,
+  .profileDropdown li button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .profileDropdown li a:hover,
+  .profileDropdown li button:hover {
+    background: #47454562;
+  }
+  
+  .mobileTopBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  /* Mobile Styles */
+  @media (max-width: 768px) {
+    .nav,
+    .actions {
+      display: none;
+    }
+  
+    .hamburger {
+      display: block;
+    }
+  
+    .mobileMenu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100vh;
+      background-color: #131111f3;
+      color: white;
+      padding: 1rem;
+      z-index: 100;
+      box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+      animation: slideInRight 0.3s ease forwards;
+    }
+  
+    .mobileMenu ul {
+      list-style: none;
+      /* border: white solid 0.1rem; */
+      padding: 0;
+    }
+  
+    .mobileMenu li {
+      margin-bottom: 1rem;
+    }
+  
+    .mobileMenu li a,
+    .mobileMenu li button {
+      color: white;
+      text-decoration: none;
+      font-size: 1.125rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  
+    .mobileMenu ul ul {
+      margin-left: 1rem;
+      margin-top: 0.5rem;
+    }
+  
+    .mobileMenu ul ul li {
+      font-size: 0.95rem;
+    }
+  }
+  
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideOutRight {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+  }
+  
+  /* Optional: hide with animation if needed */
+  .mobileMenu.hide {
+    animation: slideOutRight 0.3s ease forwards;
+    pointer-events: none;
+  }
+  
+  

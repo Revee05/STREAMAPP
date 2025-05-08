@@ -1,0 +1,52 @@
+.loaderContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full viewport height */
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 1)); /* Dark gradient background */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  color: white; /* White text for contrast */
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.loadingSpinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-top: 5px solid #e50914; /* Netflix red color */
+  border-radius: 50%;
+  animation: spin 1.5s linear infinite, pulse 1s ease-in-out infinite;
+  margin-right: 15px;
+  display: inline-block;
+  vertical-align: middle;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.8);
+  }
+  50% {
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(255, 255, 255, 1);
+  }
+}
+
+.loaderContainer span {
+  font-size: 24px; /* Larger text for better visibility */
+  color: #e50914; /* Netflix red color */
+  font-weight: bold;
+  letter-spacing: 2px;
+}

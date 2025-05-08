@@ -1,0 +1,52 @@
+.CarouselButton {
+  /* Styling umum untuk tombol */
+  font-size: 0.65rem;
+  padding: 8px 16px;
+  border-radius: 25%;
+  background-color: rgba(0, 0, 0, 0.801);
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 30px;
+  text-align: center;
+}
+
+.next {
+  background-color: #c50a13; /* Warna merah untuk tombol "Next" */
+}
+
+.previous {
+  background-color: #c50812; /* Warna merah untuk tombol "Previous" */
+}
+
+.CarouselButton:hover {
+  background-color: rgb(0, 0, 0); /* Mengubah warna latar belakang saat hover */
+  transform: scale(1.1); /* Efek pembesaran sedikit saat hover */
+}
+
+.CarouselButton.next {
+  background-color: #c50a13; /* Warna merah untuk tombol "Next" */
+}
+
+.CarouselButton.previous {
+  background-color: #c50812; /* Warna merah untuk tombol "Previous" */
+}
+
+/* Pastikan tombol "Next" dan "Previous" tetap merah saat hover */
+.CarouselButton.next:hover {
+  background-color: #c50a13; /* Tetap merah saat hover */
+}
+
+.CarouselButton.previous:hover {
+  background-color: #c50812; /* Tetap merah saat hover */
+}
+
+.CarouselButton:focus {
+  outline: none; /* Menghapus outline saat fokus */
+}

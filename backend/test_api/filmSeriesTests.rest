@@ -1,0 +1,23 @@
+### Get all films (paginated)
+GET http://localhost:8000/api/Film/all?page=1&limit=12
+Accept: application/json
+
+### Get film by ID
+GET http://localhost:8000/api/Film/50
+Accept: application/json
+
+### Get films by genre
+GET http://localhost:8000/api/Film/byGenre?genre=Action&page=1&limit=12
+Accept: application/json
+
+### Get all series (paginated)
+GET http://localhost:8000/api/Series/all?page=1&limit=12
+Accept: application/json
+
+### Get series by ID
+GET http://localhost:8000/api/Series/1
+Accept: application/json
+
+### Get series by genre
+GET http://localhost:8000/api/Series/byGenre?genre=Drama&page=1&limit=12
+Accept: application/json

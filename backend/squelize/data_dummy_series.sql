@@ -1,0 +1,22 @@
+-- Menambahkan series ke tabel series
+INSERT INTO series (title, rating, poster_url, release_year) VALUES
+('Stranger Things', 8.7, 'https://example.com/posters/stranger_things.jpg', 2016),
+('Breaking Bad', 9.5, 'https://example.com/posters/breaking_bad.jpg', 2008),
+('The Witcher', 8.0, 'https://example.com/posters/witcher.jpg', 2019),
+('Friends', 8.9, 'https://example.com/posters/friends.jpg', 1994),
+('The Office', 8.8, 'https://example.com/posters/the_office.jpg', 2005),
+('The Mandalorian', 8.7, 'https://example.com/posters/mandalorian.jpg', 2019),
+('The Crown', 8.7, 'https://example.com/posters/crown.jpg', 2016),
+('The Boys', 8.7, 'https://example.com/posters/boys.jpg', 2019),
+('Game of Thrones', 9.3, 'https://example.com/posters/got.jpg', 2011),
+('The Handmaids Tale', 8.4, 'https://example.com/posters/handmaid.jpg', 2017),
+('The Umbrella Academy', 8.0, 'https://example.com/posters/umbrella.jpg', 2019),
+('Ozark', 8.5, 'https://example.com/posters/ozark.jpg', 2017),
+('Narcos', 8.8, 'https://example.com/posters/narcos.jpg', 2015),
+('Black Mirror', 8.8, 'https://example.com/posters/black_mirror.jpg', 2011),
+('The Good Place', 8.2, 'https://example.com/posters/good_place.jpg', 2016),
+('The Marvelous Mrs. Maisel', 8.7, 'https://example.com/posters/marvelous.jpg', 2017),
+('Fargo', 8.9, 'https://example.com/posters/fargo.jpg', 2014),
+('Better Call Saul', 8.6, 'https://example.com/posters/better_call_saul.jpg', 2015),
+('The Expanse', 8.5, 'https://example.com/posters/expanse.jpg', 2015),
+('The Leftovers', 8.3, 'https://example.com/posters/leftovers.jpg', 2014);

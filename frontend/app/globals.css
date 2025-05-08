@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0ae7;
+  --foreground: #edededda;
+}
+/* Tambahkan kelas manual untuk kontrol tema */
+.theme-light {
+  --background: #ffffff;
+  --foreground: #171717e7;
+}
+
+.theme-dark {
+  --background: #0a0a0ae7;
+  --foreground: #edededda;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  transition: background 0.3s, color 0.3s;
+}
+
+/* * {
+  border: 0.5px solid white;
+} */

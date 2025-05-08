@@ -1,0 +1,17 @@
+### Cek status autentikasi (token valid)
+GET http://localhost:8000/api/auth/status
+Cookie: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsInVzZXJuYW1lIjoiSGVsbG8xMjMiLCJlbWFpbCI6IkhlbGxvMTIzQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ1MDY5NTk0LCJleHAiOjE3NDUwNzA0OTR9.0L1P1an8YzmYjLH14S2nUqUWdW_gGq0vrU6kjgmijWo
+Content-Type: application/json
+
+###
+
+### Cek status autentikasi (tanpa token)
+GET http://localhost:8000/api/auth/status
+Content-Type: application/json
+
+###
+
+### Cek status autentikasi (token tidak valid)
+GET http://localhost:8000/api/auth/status
+Cookie: ydusdnlsihfiosd
+Content-Type: application/json
