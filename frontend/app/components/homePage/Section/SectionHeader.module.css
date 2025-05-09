@@ -16,7 +16,7 @@
 
 .sectionHeaderChildrenWrapper {
   display: flex;
-  margin-right: 0.5rem;
+  margin-right: 1rem;
   height: 30px; 
   gap: 0.5rem; /* jarak antara ViewAllbutton dengan Carousel button */
 }
