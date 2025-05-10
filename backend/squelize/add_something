@@ -1,2 +1,0 @@
-ALTER TABLE films
-ADD films_url TEXT;
