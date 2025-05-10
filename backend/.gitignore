@@ -1,6 +1,7 @@
 # Dependencies
 node_modules/
 test_api/
+squelize/
 package-lock.json
 
 # Environment variables

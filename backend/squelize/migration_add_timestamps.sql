@@ -14,6 +14,12 @@ ALTER TABLE genres
   ADD COLUMN IF NOT EXISTS created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
   ADD COLUMN IF NOT EXISTS updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP;
 
+ALTER TABLE film_genres
+ADD COLUMN createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+
+
 -- Add indexes on foreign key columns for performance (optional)
 CREATE INDEX IF NOT EXISTS idx_user_series_lists_user_id ON user_series_lists(user_id);
 CREATE INDEX IF NOT EXISTS idx_user_series_lists_series_id ON user_series_lists(series_id);
