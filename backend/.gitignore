@@ -2,6 +2,7 @@
 node_modules/
 test_api/
 squelize/
+models/
 package-lock.json
 
 # Environment variables
