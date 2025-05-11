@@ -4,6 +4,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem('isLoggedIn');
@@ -26,6 +27,7 @@ export function AuthProvider({ children }) {
         if (res.ok) {
           const data = await res.json();
           setIsLoggedIn(data.isAuthenticated);
+          setUser(data.user || null);
         } else if (res.status === 401) {
           // Token mungkin expired → coba refresh tanpa log error
           const refresh = await fetch(`${apiUrl}/api/auth/refresh`, {
@@ -42,21 +44,26 @@ export function AuthProvider({ children }) {
             if (retry.ok) {
               const data = await retry.json();
               setIsLoggedIn(data.isAuthenticated);
+              setUser(data.user || null);
             } else {
               setIsLoggedIn(false);
+              setUser(null);
             }
           } else {
             // Refresh gagal → anggap logout
             setIsLoggedIn(false);
+            setUser(null);
           }
         } else {
           // Log other unexpected errors
           console.error('Auth check error:', res.status, res.statusText);
           setIsLoggedIn(false);
+          setUser(null);
         }
       } catch (error) {
         console.error('Auth check error:', error);
         setIsLoggedIn(false);
+        setUser(null);
       } finally {
         setLoading(false);
       }
@@ -76,7 +83,7 @@ export function AuthProvider({ children }) {
   }, [isLoggedIn]);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, loading }}>
+    <AuthContext.Provider value={{ user, isLoggedIn, setIsLoggedIn, loading }}>
       {children}
     </AuthContext.Provider>
   );
