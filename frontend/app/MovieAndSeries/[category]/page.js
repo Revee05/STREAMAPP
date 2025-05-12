@@ -3,8 +3,9 @@
 import React, { useState, useEffect } from "react";
 import styles from "../styles/page.module.css";
 import stylesGenre from "../styles/GenreSection.module.css";
-import CardListHorizontal from "@/app/components/CardListHorizontal";
+import CardListHorizontal from "../../components/CardListHorizontal";
 import { useParams, useRouter } from "next/navigation";
+import { slugify } from "../../utils/slugify";
 
 export default function MovieOrSeriesPage() {
   const params = useParams();
@@ -13,10 +14,6 @@ export default function MovieOrSeriesPage() {
 
   const [genres, setGenres] = useState([]);
   const [contentByGenre, setContentByGenre] = useState({});
-
-  function slugify(text) {
-    return text.toString().toLowerCase().replace(/\s+/g, "-");
-  }
 
   useEffect(() => {
     async function fetchGenres() {
@@ -91,8 +88,9 @@ export default function MovieOrSeriesPage() {
                     <CardListHorizontal
                       items={(contentByGenre[genre.id] || []).map((item) => ({
                         id: item.id,
+                        slug: slugify(item.title),
                         title: item.title || item.name || "Untitled",
-                        poster: item.poster_url || item.poster || "",
+                        poster: item.poster_url || "",
                         releaseYear: item.release_year || "",
                         averageRating: item.averageRating || "",
                         // Add other details as needed

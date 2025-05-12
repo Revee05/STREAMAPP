@@ -1,18 +1,50 @@
 'use client'
 
 import { useParams } from 'next/navigation'
-import Header from '@/app/components/Header/Header'
+import Header from '../../components/Header/Header'
 import styles from './WatchPage.module.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function WatchPage() {
   const params = useParams()
+  const { slug } = params
 
-  // Dummy content type: 'movie' or 'series'
-  // For demonstration, let's assume series for now
-  const contentType = 'series' // Change to 'movie' to test hiding dropdowns
+  const [contentType, setContentType] = useState(null) // 'movie' or 'series'
+  const [contentData, setContentData] = useState(null)
 
-  // Dummy data for seasons and episodes
+  useEffect(() => {
+    async function fetchContent() {
+      try {
+        let apiUrl = ''
+        // Try fetching from films endpoint first
+        apiUrl = `${process.env.NEXT_PUBLIC_SERVER_API}/api/films/bySlug?slug=${encodeURIComponent(slug)}`
+        let response = await fetch(apiUrl)
+        if (response.ok) {
+          const data = await response.json()
+          setContentData(data)
+          setContentType('movie')
+          return
+        }
+        // If not found in films, try series endpoint
+        apiUrl = `${process.env.NEXT_PUBLIC_SERVER_API}/api/series/bySlug?slug=${encodeURIComponent(slug)}`
+        response = await fetch(apiUrl)
+        if (response.ok) {
+          const data = await response.json()
+          setContentData(data)
+          setContentType('series')
+          return
+        }
+        throw new Error('Content not found')
+      } catch (error) {
+        console.error('Error fetching content:', error)
+      }
+    }
+    if (slug) {
+      fetchContent()
+    }
+  }, [slug])
+
+  // Dummy data for seasons and episodes if series
   const seasons = [1, 2]
   const episodesPerSeason = 12
 
@@ -33,7 +65,7 @@ export default function WatchPage() {
   return (
     <div className={styles.container}>
       {/* Header Section */}
-      <Header/>
+      <Header />
       {/* Ads Section */}
       <div className={styles.adsSection}>
         <span className="text-gray-500">Ads Section</span>
@@ -47,7 +79,7 @@ export default function WatchPage() {
             Video Player
           </div>
 
-          {contentType === 'series' && (
+          {contentType === 'series' ? (
             <div className={styles.seasonSelector}>
               {seasons.map((season) => (
                 <div key={season} className={styles.seasonItem}>
@@ -77,11 +109,19 @@ export default function WatchPage() {
                 </div>
               ))}
             </div>
+          ) : contentType === 'movie' ? (
+            <div className={styles.movieDetails}>
+              <h3>Movie Details</h3>
+              <p>{contentData ? contentData.description : 'Loading description...'}</p>
+              {/* Add more movie-specific UI here */}
+            </div>
+          ) : (
+            <p>Loading content...</p>
           )}
 
           <div className={styles.detailInfo}>
             <h2 className={styles.detailTitle}>Detail Information</h2>
-            <p className={styles.detailText}>Video details and description will go here</p>
+            <p className={styles.detailText}>{contentData ? contentData.description : 'Loading description...'}</p>
           </div>
         </div>
 

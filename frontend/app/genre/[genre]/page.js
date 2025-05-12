@@ -7,6 +7,13 @@ import styles from "./GenrePage.module.css";
 
 const ITEMS_PER_PAGE = 24;
 
+function slugify(text) {
+  return text.toString().toLowerCase().trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w\-]+/g, "")
+    .replace(/\-\-+/g, "-");
+}
+
 export default function GenrePage() {
   const params = useParams();
   const router = useRouter();
@@ -102,29 +109,25 @@ export default function GenrePage() {
   return (
     <main className={styles.container}>
       <h1 className={styles.heading}>{displayGenreName}</h1>
-      {/* <button
-        onClick={() => window.location.href = '/'}
-        className={styles.button}
-        style={{ marginBottom: '1rem' }}
-      >
-        Back to Home
-      </button> */}
       <div className={styles.grid}>
-        {currentItems.map((item) => (
-          <div
-            key={item.id}
-            onClick={() => router.push(`/watch/${item.id}`)}
-            style={{ cursor: "pointer" }}
-          >
-            <MediaCard
-              title={item.title || item.name}
-              year={item.release_year || item.year}
-              poster={item.poster_url || item.poster}
-              rating={item.averageRating || item.rating}
-              duration={item.duration || ""}
-            />
-          </div>
-        ))}
+        {currentItems.map((item) => {
+          const slug = slugify(item.title || item.name || "untitled");
+          return (
+            <div
+              key={item.id}
+              onClick={() => router.push(`/watch/${slug}`)}
+              style={{ cursor: "pointer" }}
+            >
+              <MediaCard
+                title={item.title || item.name}
+                year={item.release_year || item.year}
+                poster={item.poster_url || item.poster}
+                rating={item.averageRating || item.rating}
+                duration={item.duration || ""}
+              />
+            </div>
+          );
+        })}
       </div>
       <div className={styles.pagination}>
         <button

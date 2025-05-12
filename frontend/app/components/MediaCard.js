@@ -14,8 +14,8 @@ export default function MediaCard({ id, slug, title, year, duration, rating, pos
   };
 
   const handleCardClick = () => {
-    if (id) {
-      router.push(`/watch/${encodeURIComponent(id)}`);
+    if (slug) {
+      router.push(`/watch/${encodeURIComponent(slug)}`);
     }
   };
 

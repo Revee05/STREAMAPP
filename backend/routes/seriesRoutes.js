@@ -1,11 +1,12 @@
 const express = require("express");
-const { getSeriesByGenre, getSeriesById, getAllSeries } = require("../controllers/ContentController/series");
+const { getSeriesByGenre, getSeriesById, getAllSeries, getSeriesBySlug } = require("../controllers/ContentController/series");
 // const { getSeriesByGenre, getSeriesById, getAllSeries, createSeries, updateSeries, deleteSeries } = require("../controllers/ContentController/series");
 const authMiddleware = require("../middlewares/authMiddleware");
 const { checkRole } = require("../middlewares/roleCheck");
 const router = express.Router();
 
 router.get("/byGenre", getSeriesByGenre); // Public route
+router.get("/bySlug", getSeriesBySlug); // Public route
 router.get("/:id", getSeriesById); // Public route
 router.get("/Series/all", getAllSeries); // Public route
 

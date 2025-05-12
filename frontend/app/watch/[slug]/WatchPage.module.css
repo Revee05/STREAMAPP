@@ -2,7 +2,7 @@
   max-width: 85rem;
   margin-left: auto;
   margin-right: auto;
-  padding: 0rem;
+  padding: 0 0.5rem;
   background-color: #141414; /* Netflix dark background */
   color: #e5e5e5; /* Netflix light text */
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
