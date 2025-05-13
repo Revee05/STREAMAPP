@@ -5,7 +5,7 @@
   padding: 0 0.5rem;
   background-color: #141414; /* Netflix dark background */
   color: #e5e5e5; /* Netflix light text */
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .adsSection {
@@ -52,13 +52,6 @@
   color: #e5e5e5;
 }
 
-.ratingStars {
-  color: #e5b50a;
-  font-size: 1.25rem;
-  display: flex;
-  align-items: center;
-}
-
 .ratingStarsContainer {
   display: flex;
   gap: 0.1rem;
@@ -68,7 +61,6 @@
 
 .star {
   font-size: 1.5rem;
-  /* user-select: none; */
 }
 
 .likeButton,
@@ -99,7 +91,7 @@
   border: 1px solid #333;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  box-shadow: 0 0 10px rgba(0,0,0,0.7);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
 }
 
 .seasonItem {
@@ -141,6 +133,14 @@
 
 .episodeItem:hover {
   color: #b00610; /* Netflix dark red */
+}
+
+.movieDetails {
+  background-color: #141414;
+  border: 1px solid #333;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  color: #e5e5e5;
 }
 
 .detailInfo {

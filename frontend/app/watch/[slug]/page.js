@@ -11,6 +11,7 @@ export default function WatchPage() {
 
   const [contentType, setContentType] = useState(null); // 'movie' or 'series'
   const [contentData, setContentData] = useState(null);
+  const [titleYear, setTitleYear] = useState(null);
 
   useEffect(() => {
     async function fetchContent() {
@@ -25,6 +26,14 @@ export default function WatchPage() {
           const data = await response.json();
           setContentData(data);
           setContentType("movie");
+          // Fetch detailed data by id for title and year
+          const detailResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_SERVER_API}/api/films/${data.id}`
+          );
+          if (detailResponse.ok) {
+            const detailData = await detailResponse.json();
+            setTitleYear(`${detailData.title} (${detailData.release_year})`); 
+          }
           return;
         }
         // If not found in films, try series endpoint
@@ -36,6 +45,14 @@ export default function WatchPage() {
           const data = await response.json();
           setContentData(data);
           setContentType("series");
+          // Fetch detailed data by id for title and year
+          const detailResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_SERVER_API}/api/series/${data.id}`
+          );
+          if (detailResponse.ok) {
+            const detailData = await detailResponse.json();
+            setTitleYear(`${detailData.title} (${detailData.release_year})`);
+          }
           return;
         }
         throw new Error("Content not found");
@@ -117,8 +134,8 @@ export default function WatchPage() {
         <div className={styles.videoColumn}>
           <div className={styles.videoPlayer}>Video Player</div>
           <div className={styles.videoTitle}>
-            <span>disini judul video</span>
-            {/* Interactive Rating Stars */}
+            <span>{titleYear ? titleYear : "Loading title..."}</span>
+            {/* Interactive Rating Stars */} 
             <div
               className={styles.ratingStarsContainer}
               role="radiogroup"
