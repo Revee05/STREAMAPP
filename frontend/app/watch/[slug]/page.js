@@ -62,6 +62,42 @@ export default function WatchPage() {
   // Generate episodes array
   const episodes = Array.from({ length: episodesPerSeason }, (_, i) => i + 1)
 
+  // State for like and dislike counts and user interaction
+  const [likes, setLikes] = useState(0)
+  const [dislikes, setDislikes] = useState(0)
+  const [userReaction, setUserReaction] = useState(null) // 'like' or 'dislike' or null
+
+  const handleLike = () => {
+    if (userReaction === 'like') {
+      setLikes(likes - 1)
+      setUserReaction(null)
+    } else {
+      setLikes(userReaction === 'dislike' ? likes + 1 : likes + 1)
+      if (userReaction === 'dislike') setDislikes(dislikes - 1)
+      setUserReaction('like')
+    }
+  }
+
+  const handleDislike = () => {
+    if (userReaction === 'dislike') {
+      setDislikes(dislikes - 1)
+      setUserReaction(null)
+    } else {
+      setDislikes(userReaction === 'like' ? dislikes + 1 : dislikes + 1)
+      if (userReaction === 'like') setLikes(likes - 1)
+      setUserReaction('dislike')
+    }
+  }
+
+  // State for interactive rating stars
+  const [rating, setRating] = useState(0)
+  const [hoverRating, setHoverRating] = useState(0)
+
+  const handleRating = (rate) => {
+    setRating(rate)
+    // TODO: Optionally send rating to backend here
+  }
+
   return (
     <div className={styles.container}>
       {/* Header Section */}
@@ -78,7 +114,60 @@ export default function WatchPage() {
           <div className={styles.videoPlayer}>
             Video Player
           </div>
-
+          <div className={styles.videoTitle}>
+            <span>disini judul video</span>
+            {/* Interactive Rating Stars */}
+            <div
+              className={styles.ratingStars}
+              role="radiogroup"
+              aria-label="Rating"
+              style={{ display: 'flex', gap: '0.1rem', cursor: 'pointer' }}
+            >
+              {[1, 2, 3, 4, 5].map((star) => (
+                <span
+                  key={star}
+                  role="radio"
+                  tabIndex={0}
+                  aria-checked={rating === star}
+                  onClick={() => handleRating(star)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      handleRating(star)
+                    }
+                  }}
+                  onMouseEnter={() => setHoverRating(star)}
+                  onMouseLeave={() => setHoverRating(0)}
+                  style={{
+                    color:
+                      (hoverRating || rating) >= star ? '#ffb400' : '#ccc',
+                    fontSize: '1.5rem',
+                    userSelect: 'none',
+                  }}
+                >
+                  ★
+                </span>
+              ))}
+            </div>
+            {/* Like and Dislike Buttons styled like YouTube */}
+            <button
+              onClick={handleLike}
+              aria-pressed={userReaction === 'like'}
+              className={styles.likeButton}
+              aria-label="Like"
+            >
+              👍
+              <span style={{ marginLeft: '0.25rem' }}>{likes}</span>
+            </button>
+            <button
+              onClick={handleDislike}
+              aria-pressed={userReaction === 'dislike'}
+              className={styles.dislikeButton}
+              aria-label="Dislike"
+            >
+              👎
+              <span style={{ marginLeft: '0.25rem' }}>{dislikes}</span>
+            </button>
+          </div>
           {contentType === 'series' ? (
             <div className={styles.seasonSelector}>
               {seasons.map((season) => (
