@@ -1,4 +1,4 @@
-const pool = require("../config/db");
+const { getAllGenres } = require("../models/genreModel");
 
 /**
  * GET /genres
@@ -14,8 +14,8 @@ const pool = require("../config/db");
  */
 const getGenres = async (req, res) => {
     try {
-        const result = await pool.query("SELECT * FROM genres");
-        res.status(200).json(result.rows);
+        const genres = await getAllGenres();
+        res.status(200).json(genres);
     } catch (error) {
         console.error("Error fetching genres:", error);
         res.status(500).json({ error: "Internal server error" });

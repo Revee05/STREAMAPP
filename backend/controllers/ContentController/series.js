@@ -82,7 +82,7 @@ const getSeriesById = async (req, res) => {
 
 // New function to get all series
 const getAllSeries = async (req, res) => {
-  console.log("Fetching all series with pagination...");
+  console.log("Fetching all series");
 
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 12;
@@ -135,4 +135,51 @@ const getAllSeries = async (req, res) => {
 //     }
 // };
 
-module.exports = { getSeriesByGenre, getSeriesById, getAllSeries }; // Updated export statement
+const getSeriesBySlug = async (req, res) => {
+  const { slug } = req.query;
+
+  if (!slug) {
+    return res.status(400).json({ error: "Slug query parameter is required" });
+  }
+
+  try {
+    // Fetch series by slug
+    const seriesResult = await pool.query("SELECT * FROM series WHERE slug = $1", [
+      slug,
+    ]);
+    if (seriesResult.rows.length === 0) {
+      return res.status(404).json({ error: "Series not found" });
+    }
+
+    // Fetch genre of the series from the series_genres table
+    const seriesId = seriesResult.rows[0].id;
+    const genresResult = await pool.query(
+      `SELECT g.name 
+             FROM genres g
+             JOIN series_genres sg ON g.id = sg.genre_id
+             WHERE sg.series_id = $1`,
+      [seriesId]
+    );
+
+    // Get average rating
+    const ratingResult = await pool.query(
+      `SELECT 
+                COALESCE(TO_CHAR(ROUND(AVG(rating), 1), 'FM999.0'), '-.-') AS average_rating 
+             FROM ratings 
+             WHERE series_id = $1`,
+      [seriesId]
+    );
+
+    // Format result as JSON
+    const series = seriesResult.rows[0];
+    series.genres = genresResult.rows.map((row) => row.name);
+    series.averageRating = ratingResult.rows[0].average_rating;
+
+    res.json(series);
+  } catch (error) {
+    console.error("Error fetching series details by slug:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+module.exports = { getSeriesByGenre, getSeriesById, getAllSeries, getSeriesBySlug }; // Updated export statement

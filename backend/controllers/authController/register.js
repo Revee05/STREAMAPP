@@ -24,13 +24,13 @@ const register = async (req, res) => {
 
         const existingEmailUser = await getUserByEmailOrUsername(email);
         if (existingEmailUser) {
-            return res.status(400).json({ message: "Email already in use" });
+            return res.status(400).json({ message: "Invalid Email/Username or Password" });
         }
 
         const existingUsernameUser = await getUserByEmailOrUsername(username);
         if (existingUsernameUser) {
             return res.status(400).json({ 
-                message: "Username already taken", 
+                message: "Invalid Email/Username or Password", 
                 suggestions: generateUsernameSuggestions(username) 
             });
         }

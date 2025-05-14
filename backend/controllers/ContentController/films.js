@@ -2,7 +2,7 @@ const pool = require("../../config/db");
 
 //function to get all films
 const getAllFilms = async (req, res) => {
-  console.log("Fetching all films with pagination...");
+  console.log("Fetching all films");
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 12;
   const offset = (page - 1) * limit;
@@ -106,4 +106,51 @@ const getFilmById = async (req, res) => {
   }
 };
 
-module.exports = { getAllFilms, getFilmsByGenre, getFilmById };
+const getFilmBySlug = async (req, res) => {
+  const { slug } = req.query;
+
+  if (!slug) {
+    return res.status(400).json({ error: "Slug query parameter is required" });
+  }
+
+  try {
+    // Fetch film by slug
+    const filmResult = await pool.query("SELECT * FROM films WHERE slug = $1", [
+      slug,
+    ]);
+    if (filmResult.rows.length === 0) {
+      return res.status(404).json({ error: "Film not found" });
+    }
+
+    // Fetch film genres from film_genres table
+    const filmId = filmResult.rows[0].id;
+    const genresResult = await pool.query(
+      `SELECT g.name 
+             FROM genres g
+             JOIN film_genres fg ON g.id = fg.genre_id
+             WHERE fg.film_id = $1`,
+      [filmId]
+    );
+
+    // Get average rating
+    const ratingResult = await pool.query(
+      `SELECT 
+                COALESCE(TO_CHAR(ROUND(AVG(rating), 1), 'FM999.0'), '-.-') AS average_rating 
+             FROM ratings 
+             WHERE film_id = $1`,
+      [filmId]
+    );
+
+    // Format result as JSON
+    const film = filmResult.rows[0];
+    film.genres = genresResult.rows.map((row) => row.name);
+    film.averageRating = ratingResult.rows[0].average_rating;
+
+    res.json(film);
+  } catch (error) {
+    console.error("Error fetching film details by slug:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+module.exports = { getAllFilms, getFilmsByGenre, getFilmById, getFilmBySlug };

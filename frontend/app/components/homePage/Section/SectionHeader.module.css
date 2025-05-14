@@ -11,7 +11,9 @@
   font-size: 1.125rem; /* text-lg */
   color: rgb(255, 255, 255);
   font-weight: 600; /* tebal teks nya (agak semi) */
-  margin-left: 1.5rem; /* jarak dari kiri */
+  margin-left: 1.2rem; /* jarak dari kiri */
+  padding: 0 0.3rem;
+  border-left: red 0.5rem solid;
 }
 
 .sectionHeaderChildrenWrapper {
