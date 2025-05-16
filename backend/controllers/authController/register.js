@@ -1,4 +1,4 @@
-const { createUser, getUserByEmailOrUsername } = require("../../models/User");
+const { createUser, getUserByEmailOrUsername } = require("../../models/userModel");
 const { hashPassword } = require("../../utils/hashPassword");
 const { generateUsernameSuggestions, isValidEmail, isValidPassword } = require("../../utils/validator");
 

@@ -1,4 +1,4 @@
-const { getUserByEmailOrUsername } = require("../../models/User");
+const { getUserByEmailOrUsername } = require("../../models/userModel");
 const { comparePassword } = require("../../utils/hashPassword");
 const { generateToken, generateRefreshToken } = require("../../utils/jwt");
 
