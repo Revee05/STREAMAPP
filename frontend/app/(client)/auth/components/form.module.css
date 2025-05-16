@@ -1,0 +1,115 @@
+.login {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background: url('https://assets.nflxext.com/ffe/siteui/vlv3/9d3533b2-0e2b-40b2-95e0-ecd7979cc88b/a3873901-5b7c-46eb-b9fa-12fea5197bd3/ID-en-20240311-popsignuptwoweeks-perspective_alpha_website_large.jpg') no-repeat center center;
+  background-size: cover;
+  filter: brightness(0.5);
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 450px;
+  margin: 30px auto 0;
+  padding: 68px 68px 40px; /* atas, kiri/kanan, bawah */
+  background-color: rgba(0, 0, 0, 0.9);
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form h1 {
+  color: #fff;
+  font-size: 2rem;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.input {
+  width: 100%; /* pastikan input penuh di dalam parent */
+  height: 50px;
+  margin-bottom: 16px; /* samakan jarak antar input */
+  padding: 16px 20px;
+  padding-right: 44px; /* Tambah ruang buat icon mata */
+  border: none;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  outline: none;
+  background-color: #454545;
+}
+
+.inputGroup {
+  position: relative;
+}
+
+.submitButton {
+  height: 50px;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  background-color: #e50914;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: #f40612;
+}
+
+.signupSection {
+  color: #fdfdfd;
+  text-align: center;
+}
+
+.switchText {
+  font-size: 16px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #fff;
+}
+
+.switchLink {
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.switchLink:hover {
+  color: #1e90ff; /* warna biru saat hover (bisa kamu ganti) */
+  text-decoration: underline;
+  text-underline-offset: 4px; /* jarak underline ke teks */
+}
+
+.error {
+  color: #e50914;
+  background: rgba(229, 9, 20, 0.425);
+  padding: 10px 20px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  text-align: center;
+}
+
