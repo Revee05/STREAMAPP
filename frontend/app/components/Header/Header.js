@@ -119,7 +119,7 @@ export default function Header() {
       <header className={styles.header}>
         <div className={styles.container}>
           <div className={styles.logo}>
-            <Link href="/">NETFLIX</Link>
+            <Link href="/">STREAMAPP</Link>
           </div>
           <div className={loadingStyles.loadingSpinner} title="Loading..."></div>
         </div>
@@ -131,7 +131,7 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.container}>
         <div className={styles.logo}>
-          <Link href="/">NETFLIX</Link>
+          <Link href="/">STREAMAP</Link>
         </div>
 
         <button className={styles.hamburger} onClick={handleMobileMenuToggle}>
