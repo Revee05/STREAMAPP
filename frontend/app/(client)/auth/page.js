@@ -3,11 +3,11 @@ import { useState } from 'react';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import styles from './auth.module.css';
-import { useAuth } from '../context/AuthContext'; // 
+import { useAuth } from '../../_lib/auth/AuthContext';
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
-  const { setIsLoggedIn } = useAuth(); // 
+  const { setIsLoggedIn } = useAuth();
 
   return (
     <div className={styles.auth}>
@@ -15,7 +15,7 @@ export default function AuthPage() {
         {isLogin ? (
           <LoginForm
             onSwitch={() => setIsLogin(false)}
-            onLoginSuccess={() => setIsLoggedIn(true)} // 
+            onLoginSuccess={() => setIsLoggedIn(true)}
           />
         ) : (
           <RegisterForm onSwitch={() => setIsLogin(true)} />

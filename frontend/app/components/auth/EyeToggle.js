@@ -1,6 +1,6 @@
 // components/EyeToggle.jsx
-'use client';
-import styles from './EyeToggle.module.css'; // Import dari login.module.css biar seragam
+"use client";
+import styles from "./EyeToggle.module.css"; // Import dari login.module.css biar seragam
 
 export default function EyeToggle({ isVisible, onToggle }) {
   return (

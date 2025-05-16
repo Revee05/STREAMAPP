@@ -2,7 +2,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './form.module.css';
-import EyeToggle from '../../components/auth/EyeToggle';
+import EyeToggle from '../../../components/auth/EyeToggle';
+import { loginUser } from '../../../_services/auth/authService';
+import { validateAuthFields } from '../../../_lib/auth/validation';
 
 export default function LoginForm({ onSwitch, onLoginSuccess }) {
   const [identifier, setIdentifier] = useState('');
@@ -15,38 +17,21 @@ export default function LoginForm({ onSwitch, onLoginSuccess }) {
     e.preventDefault();
     setError('');
 
-    if (!identifier || !password) {
+    if (!validateAuthFields({ identifier, password })) {
       setError('Please fill in all fields');
       return;
     }
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_SERVER_API;
-      const response = await fetch(`${apiUrl}/api/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include', // Include cookies in the request
-        body: JSON.stringify({ identifier, password }),
-      });
-
-      const data = await response.json();
-      
-      if (response.ok) {
-        // Set login status in localStorage
-        localStorage.setItem('isLoggedIn', 'true');
-        
-        if (onLoginSuccess) {
-          onLoginSuccess();
-        }
-        router.push('/'); // Redirect after login
-      } else {
-        setError(data.message || 'Login failed');
+      const data = await loginUser({ identifier, password });
+      localStorage.setItem('isLoggedIn', 'true');
+      if (onLoginSuccess) {
+        onLoginSuccess();
       }
+      router.push('/');
     } catch (err) {
       console.error('Login error:', err);
-      setError('An error occurred during login');
+      setError(err.message || 'An error occurred during login');
     }
   };
 
@@ -86,7 +71,9 @@ export default function LoginForm({ onSwitch, onLoginSuccess }) {
         <div className={styles.switchText}>
           <span>Don&apos;t have an account? </span>
           <br />
-          <span className={styles.switchLink} onClick={onSwitch}>Sign up</span>
+          <span className={styles.switchLink} onClick={onSwitch}>
+            Sign up
+          </span>
         </div>
       </form>
     </div>
