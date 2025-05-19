@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import styles from './form.module.css';
 import EyeToggle from '../../components/auth/EyeToggle';
+import { register } from '../../lib/auth/authService';
 
 export default function RegisterForm({ onSwitch }) {
   const [username, setUsername] = useState('');
@@ -38,26 +39,14 @@ export default function RegisterForm({ onSwitch }) {
     }
 
     try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, email, password, confirmPassword }),
-      });
+      await register(username, email, password, confirmPassword);
 
-      const data = await response.json();
-
-      if (response.ok) {
-        if (typeof onSwitch === 'function') {
-          onSwitch(); // Switch to login form after successful registration
-        }
-      } else {
-        setError(data.message || 'Registration failed');
+      if (typeof onSwitch === 'function') {
+        onSwitch(); // Switch to login form after successful registration
       }
     } catch (err) {
       console.error('Registration error:', err);
-      setError('An error occurred during registration');
+      setError(err.message || 'An error occurred during registration');
     }
   };
 

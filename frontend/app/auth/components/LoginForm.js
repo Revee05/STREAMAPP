@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './form.module.css';
 import EyeToggle from '../../components/auth/EyeToggle';
+import { login } from '../../lib/auth/authService';
 
 export default function LoginForm({ onSwitch, onLoginSuccess }) {
   const [identifier, setIdentifier] = useState('');
@@ -21,31 +22,18 @@ export default function LoginForm({ onSwitch, onLoginSuccess }) {
     }
 
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include', // Include cookies in the request
-        body: JSON.stringify({ identifier, password }),
-      });
+      await login(identifier, password);
 
-      const data = await response.json();
-      
-      if (response.ok) {
-        // Set login status in localStorage
-        localStorage.setItem('isLoggedIn', 'true');
-        
-        if (onLoginSuccess) {
-          onLoginSuccess();
-        }
-        router.push('/'); // Redirect after login
-      } else {
-        setError(data.message || 'Login failed');
+      // Set login status in localStorage
+      localStorage.setItem('isLoggedIn', 'true');
+
+      if (onLoginSuccess) {
+        onLoginSuccess();
       }
+      router.push('/'); // Redirect after login
     } catch (err) {
       console.error('Login error:', err);
-      setError('An error occurred during login');
+      setError(err.message || 'An error occurred during login');
     }
   };
 
