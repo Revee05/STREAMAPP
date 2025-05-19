@@ -28,7 +28,7 @@ export default function LoginForm({ onSwitch, onLoginSuccess }) {
       localStorage.setItem('isLoggedIn', 'true');
 
       if (onLoginSuccess) {
-        onLoginSuccess();
+        await onLoginSuccess();
       }
       router.push('/'); // Redirect after login
     } catch (err) {

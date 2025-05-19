@@ -39,6 +39,6 @@ app.use('/api/series', seriesRoutes); // Use series routes
 app.use('/api/user', userRoutes); // user routes
 
 
-const PORT = process.env.PORT || 8000; // Use environment variable or default to 5000
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

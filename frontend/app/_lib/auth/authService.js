@@ -23,6 +23,7 @@ export async function register(username, email, password, confirmPassword) {
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify({ username, email, password, confirmPassword }),
   });
 
@@ -33,4 +34,17 @@ export async function register(username, email, password, confirmPassword) {
   }
 
   return data;
+}
+
+export async function logout() {
+  try {
+    const response = await fetch('/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include',
+    });
+    return response.ok;
+  } catch (error) {
+    console.error('Logout error:', error);
+    return false;
+  }
 }

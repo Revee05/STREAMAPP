@@ -1,0 +1,23 @@
+### Test Auth Status - GET /api/auth/status
+GET http://localhost:8000/api/auth/status
+Accept: application/json
+Cookie: your_auth_cookie_here
+
+### Test Auth Refresh - POST /api/auth/refresh
+POST http://localhost:8000/api/auth/refresh
+Accept: application/json
+Cookie: your_auth_cookie_here
+
+### Test Auth Logout - POST /api/auth/logout
+POST http://localhost:8000/api/auth/logout
+Accept: application/json
+Cookie: your_auth_cookie_here
+
+### Test Auth Login - POST /api/auth/login
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+  "identifier": "test1",
+  "password": "Test1234"
+}

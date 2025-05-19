@@ -12,6 +12,7 @@ import ProfileDropdown from "./ProfileDropdown";
 import { Menu, X } from "lucide-react";
 import useClickOutside from "./useClickOutside";
 import { useAuth } from "../../context/AuthContext";
+import { logout } from '../../_lib/auth/authService';
 
 export default function Header() {
   const { isLoggedIn, setIsLoggedIn, loading: authLoading } = useAuth();
@@ -90,19 +91,18 @@ export default function Header() {
 
   const handleLogout = async () => {
     try {
-      const apiUrl = process.env.SERVER_API;
-      const response = await fetch(`${apiUrl}/api/auth/logout`, {
-        method: "POST",
-        credentials: "include",
-      });
-      if (response.ok) {
+      const success = await logout();
+      if (success) {
         setIsLoggedIn(false);
-        window.location.href = "/";
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('isLoggedIn', 'false');
+        }
+        window.location.href = '/';
       } else {
-        console.error("Logout failed");
+        console.error('Logout failed');
       }
     } catch (error) {
-      console.error("Logout error:", error);
+      console.error('Logout error:', error);
     }
   };
 

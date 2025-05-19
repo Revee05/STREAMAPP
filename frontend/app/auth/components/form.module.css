@@ -12,7 +12,7 @@
   right: 0;
   bottom: 0;
   z-index: -1;
-  background: url('https://assets.nflxext.com/ffe/siteui/vlv3/9d3533b2-0e2b-40b2-95e0-ecd7979cc88b/a3873901-5b7c-46eb-b9fa-12fea5197bd3/ID-en-20240311-popsignuptwoweeks-perspective_alpha_website_large.jpg') no-repeat center center;
+  /* background: url('https://assets.nflxext.com/ffe/siteui/vlv3/9d3533b2-0e2b-40b2-95e0-ecd7979cc88b/a3873901-5b7c-46eb-b9fa-12fea5197bd3/ID-en-20240311-popsignuptwoweeks-perspective_alpha_website_large.jpg') no-repeat center center; */
   background-size: cover;
   filter: brightness(0.5);
 }
