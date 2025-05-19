@@ -19,7 +19,7 @@ export default function MovieOrSeriesPage() {
     async function fetchGenres() {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_API}/api/genres`
+          `${process.env.SERVER_API}/api/genres`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch genres");
@@ -38,8 +38,8 @@ export default function MovieOrSeriesPage() {
       try {
         const apiUrl =
           category === "movies"
-            ? `${process.env.NEXT_PUBLIC_SERVER_API}/api/films/byGenre?genreId=${genreId}`
-            : `${process.env.NEXT_PUBLIC_SERVER_API}/api/series/byGenre?genreId=${genreId}`;
+            ? `${process.env.SERVER_API}/api/films/byGenre?genreId=${genreId}`
+            : `${process.env.SERVER_API}/api/series/byGenre?genreId=${genreId}`;
         const response = await fetch(apiUrl);
         if (!response.ok) {
           throw new Error("Failed to fetch content for genre");

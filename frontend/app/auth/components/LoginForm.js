@@ -21,8 +21,7 @@ export default function LoginForm({ onSwitch, onLoginSuccess }) {
     }
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_SERVER_API;
-      const response = await fetch(`${apiUrl}/api/auth/login`, {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

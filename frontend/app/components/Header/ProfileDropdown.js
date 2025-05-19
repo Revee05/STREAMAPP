@@ -10,7 +10,7 @@ export default function ProfileDropdown() {
 
   const handleLogout = async () => {
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_SERVER_API || 'http://localhost:8000';
+      const apiUrl = process.env.SERVER_API || 'http://localhost:8000';
       const response = await fetch(`${apiUrl}/api/auth/logout`, {
         method: 'POST',
         credentials: 'include',

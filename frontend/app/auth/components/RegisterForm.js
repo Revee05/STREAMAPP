@@ -38,8 +38,7 @@ export default function RegisterForm({ onSwitch }) {
     }
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_SERVER_API;
-      const response = await fetch(`${apiUrl}/api/auth/register`, {
+      const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

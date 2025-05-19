@@ -21,7 +21,7 @@ export default function CategoryPage() {
     setLoading(true);
     setError(null);
     try {
-      const apiBaseUrl = process.env.NEXT_PUBLIC_SERVER_API || "http://localhost:8000";
+      const apiBaseUrl = process.env.SERVER_API || "http://localhost:8000";
       const apiCategory = category === "films" ? "films" : "series";
       const apiSubPath = category === "films" ? "Film" : "Series";
       const response = await fetch(

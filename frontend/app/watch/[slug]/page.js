@@ -19,7 +19,7 @@ export default function WatchPage() {
         let apiUrl = "";
         // Try fetching from films endpoint first
         apiUrl = `${
-          process.env.NEXT_PUBLIC_SERVER_API
+          process.env.SERVER_API
         }/api/films/bySlug?slug=${encodeURIComponent(slug)}`;
         let response = await fetch(apiUrl);
         if (response.ok) {
@@ -28,7 +28,7 @@ export default function WatchPage() {
           setContentType("movie");
           // Fetch detailed data by id for title and year
           const detailResponse = await fetch(
-            `${process.env.NEXT_PUBLIC_SERVER_API}/api/films/${data.id}`
+            `${process.env.SERVER_API}/api/films/${data.id}`
           );
           if (detailResponse.ok) {
             const detailData = await detailResponse.json();
@@ -38,7 +38,7 @@ export default function WatchPage() {
         }
         // If not found in films, try series endpoint
         apiUrl = `${
-          process.env.NEXT_PUBLIC_SERVER_API
+          process.env.SERVER_API
         }/api/series/bySlug?slug=${encodeURIComponent(slug)}`;
         response = await fetch(apiUrl);
         if (response.ok) {
@@ -47,7 +47,7 @@ export default function WatchPage() {
           setContentType("series");
           // Fetch detailed data by id for title and year
           const detailResponse = await fetch(
-            `${process.env.NEXT_PUBLIC_SERVER_API}/api/series/${data.id}`
+            `${process.env.SERVER_API}/api/series/${data.id}`
           );
           if (detailResponse.ok) {
             const detailData = await detailResponse.json();
