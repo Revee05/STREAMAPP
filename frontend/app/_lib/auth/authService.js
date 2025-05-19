@@ -1,4 +1,4 @@
-'use server';
+// 'use server';
 
 export async function login(identifier, password) {
   const response = await fetch('/api/auth/login', {
