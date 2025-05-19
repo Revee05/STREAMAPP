@@ -1,4 +1,4 @@
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from '@/app/_lib/auth/context/AuthContext';
 import './globals.css';
 import React from 'react';
 import AuthWrapper from './components/AuthWrapper';

@@ -1,8 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useAuth } from '../context/AuthContext';
-import styles from './styles/AuthWrapper.module.css'; // Import CSS Module
+import styles from './AuthWrapper.module.js'; // Import CSS Module
 
 export default function AuthWrapper({ children }) {
   const { loading } = useAuth();

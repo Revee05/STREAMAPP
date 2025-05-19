@@ -11,7 +11,7 @@ import MobileMenu from "./MobileMenu";
 import ProfileDropdown from "./ProfileDropdown";
 import { Menu, X } from "lucide-react";
 import useClickOutside from "./useClickOutside";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "@/app/_lib/auth/context/authContext";
 
 export default function Header() {
   const { isLoggedIn, setIsLoggedIn, loading: authLoading } = useAuth();
