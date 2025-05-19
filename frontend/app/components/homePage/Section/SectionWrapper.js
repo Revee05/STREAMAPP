@@ -1,3 +1,4 @@
+'use client';
 import SectionHeader from "../Section/SectionHeader";
 import styles from './SectionWrapper.module.css';
 

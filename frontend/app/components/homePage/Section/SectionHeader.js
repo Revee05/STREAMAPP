@@ -1,4 +1,4 @@
-// 'use client';
+'use client';
 import styles from './SectionHeader.module.css';
 
 export default function SectionHeader({ title, children }) {

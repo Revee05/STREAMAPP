@@ -1,3 +1,5 @@
+'use client';
+
 import SectionWrapper from "../Section/SectionWrapper";
 import ViewAllButton from "../../Buttons/ViewButtons";
 import CarouselButton from "../../../components/Buttons/CarouselButton";

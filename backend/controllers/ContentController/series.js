@@ -1,5 +1,37 @@
 const pool = require("../../config/db");
 
+// function to get all series
+const getAllSeries = async (req, res) => {
+  // console.log("Fetching all series");
+
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 12;
+  const offset = (page - 1) * limit;
+
+  try {
+    const totalCountResult = await pool.query("SELECT COUNT(*) FROM series");
+    const totalCount = parseInt(totalCountResult.rows[0].count);
+
+    const result = await pool.query(
+      `SELECT * FROM series 
+             ORDER BY release_year DESC NULLS LAST, 
+                      release_month DESC NULLS LAST, 
+                      release_day DESC NULLS LAST 
+             LIMIT $1 OFFSET $2`,
+      [limit, offset]
+    );
+
+    res.status(200).json({
+      items: result.rows,
+      totalCount: totalCount,
+    });
+  } catch (error) {
+    console.error("Error fetching series with pagination:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// function to get series by genre
 const getSeriesByGenre = async (req, res) => {
   const { genreId, page = 1, limit = 18 } = req.query; // Default limit to 18
   try {
@@ -30,6 +62,7 @@ const getSeriesByGenre = async (req, res) => {
   }
 };
 
+// function to get series by ID
 const getSeriesById = async (req, res) => {
   const { id } = req.params; // Get the series ID from the request parameters
   console.log(`Fetching series with ID: ${id}`); // Debug log for checking ID
@@ -80,61 +113,7 @@ const getSeriesById = async (req, res) => {
   }
 };
 
-// New function to get all series
-const getAllSeries = async (req, res) => {
-  console.log("Fetching all series");
-
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 12;
-  const offset = (page - 1) * limit;
-
-  try {
-    const totalCountResult = await pool.query("SELECT COUNT(*) FROM series");
-    const totalCount = parseInt(totalCountResult.rows[0].count);
-
-    const result = await pool.query(
-      `SELECT * FROM series 
-             ORDER BY release_year DESC NULLS LAST, 
-                      release_month DESC NULLS LAST, 
-                      release_day DESC NULLS LAST 
-             LIMIT $1 OFFSET $2`,
-      [limit, offset]
-    );
-
-    res.status(200).json({
-      items: result.rows,
-      totalCount: totalCount,
-    });
-  } catch (error) {
-    console.error("Error fetching series with pagination:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
-
-// const getSeriesRatings = async (req, res) => {
-//     const { id } = req.params; // Ambil ID film dari request parameter
-
-//     if (isNaN(id) || parseInt(id) <= 0) {
-//         return res.status(400).json({ error: "Invalid series ID" });
-//     }
-
-//     try {
-//         // Query untuk menghitung rata-rata rating film dengan pembulatan 1 desimal
-//         const ratingResult = await pool.query(
-//             `SELECT
-//                 COALESCE(TO_CHAR(ROUND(AVG(rating), 1), 'FM999.0'), '-.-') AS average_rating
-//              FROM ratings
-//              WHERE series_id = $1`,
-//             [id]
-//         );
-
-//         res.json({ averageRating: ratingResult.rows[0].average_rating });
-//     } catch (error) {
-//         console.error("Error fetching film ratings:", error);
-//         res.status(500).json({ error: "Internal server error" });
-//     }
-// };
-
+// function to get series by slug
 const getSeriesBySlug = async (req, res) => {
   const { slug } = req.query;
 
@@ -181,5 +160,32 @@ const getSeriesBySlug = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+// function to get series ratings
+// const getSeriesRatings = async (req, res) => {
+//     const { id } = req.params; // Ambil ID film dari request parameter
+
+//     if (isNaN(id) || parseInt(id) <= 0) {
+//         return res.status(400).json({ error: "Invalid series ID" });
+//     }
+
+//     try {
+//         // Query untuk menghitung rata-rata rating film dengan pembulatan 1 desimal
+//         const ratingResult = await pool.query(
+//             `SELECT
+//                 COALESCE(TO_CHAR(ROUND(AVG(rating), 1), 'FM999.0'), '-.-') AS average_rating
+//              FROM ratings
+//              WHERE series_id = $1`,
+//             [id]
+//         );
+
+//         res.json({ averageRating: ratingResult.rows[0].average_rating });
+//     } catch (error) {
+//         console.error("Error fetching film ratings:", error);
+//         res.status(500).json({ error: "Internal server error" });
+//     }
+// };
+
+
 
 module.exports = { getSeriesByGenre, getSeriesById, getAllSeries, getSeriesBySlug }; // Updated export statement

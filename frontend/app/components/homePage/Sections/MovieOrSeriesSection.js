@@ -1,10 +1,12 @@
+'use client';
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import SectionWrapper from "../Section/SectionWrapper";
 import ViewAllButton from "../../Buttons/ViewButtons";
 import styles from './MovieOrSeriesSection.module.css';
 import CardListHorizontal from "../../CardListHorizontal";
-import { slugify } from "../../../utils/slugify";
+import { fetchMovies, fetchSeries } from "../../../_lib/homepage/MovieOrSeriesService";
 
 export default function MovieOrSeriesSection() {
   const router = useRouter();
@@ -14,24 +16,10 @@ export default function MovieOrSeriesSection() {
   const [loadingSeries, setLoadingSeries] = useState(true);
 
   useEffect(() => {
-    const apiUrl = process.env.SERVER_API || 'http://localhost:8000';
-
-    const fetchMovies = async () => {
+    const loadMovies = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/films/Film/all?page=1&limit=12`);
-        if (response.ok) {
-          const data = await response.json();
-          // Add year fallback fields and slug
-          const moviesWithSlug = data.items.map(item => ({
-            ...item,
-            year: item.year || item.releaseYear || item.release_year || item.release_date || '',
-            slug: slugify(item.title),
-            poster: item.poster_url || '',
-          }));
-          setMovies(moviesWithSlug);
-        } else {
-          console.error("Failed to fetch movies");
-        }
+        const moviesData = await fetchMovies(1, 12);
+        setMovies(moviesData);
       } catch (error) {
         console.error("Error fetching movies:", error);
       } finally {
@@ -39,22 +27,10 @@ export default function MovieOrSeriesSection() {
       }
     };
 
-    const fetchSeries = async () => {
+    const loadSeries = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/series/Series/all?page=1&limit=12`);
-        if (response.ok) {
-          const data = await response.json();
-          // Add year fallback fields and slug
-          const seriesWithSlug = data.items.map(item => ({
-            ...item,
-            year: item.year || item.releaseYear || item.release_year || item.release_date || '',
-            slug: slugify(item.title),
-            poster: item.poster_url || '',
-          }));
-          setSeries(seriesWithSlug);
-        } else {
-          console.error("Failed to fetch series");
-        }
+        const seriesData = await fetchSeries(1, 12);
+        setSeries(seriesData);
       } catch (error) {
         console.error("Error fetching series:", error);
       } finally {
@@ -62,8 +38,8 @@ export default function MovieOrSeriesSection() {
       }
     };
 
-    fetchMovies();
-    fetchSeries();
+    loadMovies();
+    loadSeries();
   }, []);
 
   return (

@@ -1,4 +1,5 @@
 "use client";
+
 import SectionWrapper from "../Section/SectionWrapper";
 import styles from "./TrendingSection.module.css";
 import CardListHorizontal from "../../CardListHorizontal";

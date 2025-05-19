@@ -2,7 +2,7 @@ const pool = require("../../config/db");
 
 //function to get all films
 const getAllFilms = async (req, res) => {
-  console.log("Fetching all films");
+  // console.log("Fetching all films");
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 12;
   const offset = (page - 1) * limit;

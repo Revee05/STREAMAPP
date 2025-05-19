@@ -3,7 +3,7 @@ const nextConfig = {
   env: {
     SERVER_API: process.env.SERVER_API
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
     domains: [
       "i.pravatar.cc",
