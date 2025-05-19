@@ -1,26 +1,8 @@
 'use client';
 import Link from 'next/link';
-import { useAuth } from '@/app/context/AuthContext';
 import styles from './styles.module.css';
-import { useRouter } from 'next/navigation';
-import { logout } from '@/app/_lib/auth/authService';
 
-export default function ProfileDropdown() {
-  const { isLoggedIn, setIsLoggedIn } = useAuth();
-  const router = useRouter();
-
-  const handleLogout = async () => {
-    try {
-      const success = await logout();
-      if (success) {
-        setIsLoggedIn(false);
-        router.push('/');
-      }
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
-  };
-
+export default function ProfileDropdown({ isLoggedIn, handleLogout }) {
   return (
     <ul className={styles.profileDropdown}>
       {isLoggedIn ? (
