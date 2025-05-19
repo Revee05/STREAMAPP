@@ -1,4 +1,5 @@
 // Import slugify from utils
+'use server'
 import { slugify } from '../../utils/slugify';
 
 const apiUrl = process.env.SERVER_API || 'http://localhost:8000';

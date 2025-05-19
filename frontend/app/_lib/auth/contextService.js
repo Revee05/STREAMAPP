@@ -1,3 +1,5 @@
+'use server'
+
 export async function checkAuthStatus() {
   try {
     // Step 1: Coba cek token utama
