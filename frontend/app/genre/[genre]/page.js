@@ -40,7 +40,7 @@ export default function GenrePage() {
   useEffect(() => {
     async function fetchGenres() {
       try {
-        const response = await fetch(`${process.env.SERVER_API}/api/genres`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_API}/api/genres`);
         if (!response.ok) {
           throw new Error("Failed to fetch genres");
         }
@@ -58,8 +58,8 @@ export default function GenrePage() {
       try {
         const apiUrl =
           category === "movies"
-            ? `${process.env.SERVER_API}/api/films/byGenre?genreId=${genreId}`
-            : `${process.env.SERVER_API}/api/series/byGenre?genreId=${genreId}`;
+            ? `${process.env.NEXT_PUBLIC_SERVER_API}/api/films/byGenre?genreId=${genreId}`
+            : `${process.env.NEXT_PUBLIC_SERVER_API}/api/series/byGenre?genreId=${genreId}`;
         const response = await fetch(apiUrl);
         if (!response.ok) {
           throw new Error("Failed to fetch content for genre");

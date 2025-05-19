@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './form.module.css';
 import EyeToggle from '../../components/auth/EyeToggle';
-import { login } from '../../lib/auth/authService';
+import { login } from '../../_lib/auth/authService';
 
 export default function LoginForm({ onSwitch, onLoginSuccess }) {
   const [identifier, setIdentifier] = useState('');

@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import styles from './form.module.css';
 import EyeToggle from '../../components/auth/EyeToggle';
-import { register } from '../../lib/auth/authService';
+import { register } from '../../_lib/auth/authService';
 
 export default function RegisterForm({ onSwitch }) {
   const [username, setUsername] = useState('');
