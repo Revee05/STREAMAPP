@@ -8,11 +8,13 @@ export default function NavLinks({
   historyRef,
   genres,
   historyList,
-  showGenreDropdown,
-  setShowGenreDropdown,
-  showHistoryDropdown,
-  setShowHistoryDropdown,
+  activeDropdown,
+  setActiveDropdown,
 }) {
+  const toggleDropdown = (name) => {
+    setActiveDropdown(activeDropdown === name ? null : name);
+  };
+
   return (
     <ul className={styles.navList}>
       <li><Link href="/">Home</Link></li>
@@ -21,17 +23,17 @@ export default function NavLinks({
       <li><Link href="/MyList">MyList</Link></li>
 
       <li className={styles.relative} ref={genreRef}>
-        <button onClick={() => setShowGenreDropdown(!showGenreDropdown)}>
-          Genre {showGenreDropdown ? "▲" : "▼"}
+        <button onClick={() => toggleDropdown('genre')}>
+          Genre {activeDropdown === 'genre' ? "▲" : "▼"}
         </button>
-        {showGenreDropdown && <GenreDropdown genres={genres} />}
+        {activeDropdown === 'genre' && <GenreDropdown genres={genres} />}
       </li>
 
       <li className={styles.relative} ref={historyRef}>
-        <button onClick={() => setShowHistoryDropdown(!showHistoryDropdown)}>
-          History {showHistoryDropdown ? "▲" : "▼"}
+        <button onClick={() => toggleDropdown('history')}>
+          History {activeDropdown === 'history' ? "▲" : "▼"}
         </button>
-        {showHistoryDropdown && <HistoryDropdown historyList={historyList} />}
+        {activeDropdown === 'history' && <HistoryDropdown historyList={historyList} />}
       </li>
     </ul>
   );

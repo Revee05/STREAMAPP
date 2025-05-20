@@ -18,62 +18,37 @@ export default function Header() {
   const { isLoggedIn, setIsLoggedIn, loading: authLoading } = useAuth();
   const router = useRouter();
 
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const [showGenreDropdown, setShowGenreDropdown] = useState(false);
-  const [showHistoryDropdown, setShowHistoryDropdown] = useState(false);
-  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null); // null | 'genre' | 'history' | 'profile' | 'mobile'
   const [loading, setLoading] = useState(false);
 
-  const mobileMenuRef = useRef(null);
   const genreRef = useRef(null);
   const historyRef = useRef(null);
   const profileRef = useRef(null);
+  const mobileMenuRef = useRef(null);
 
   const genres = [
-    "Action",
-    "Adventure",
-    "Animation",
-    "Biography",
-    "Comedy",
-    "Crime",
-    "Documentary",
-    "Drama",
-    "Family",
-    "Fantasy",
-    "History",
-    "Horror",
-    "Music",
-    "Musical",
-    "Mystery",
-    "Romance",
-    "Sci-Fi",
-    "Sport",
-    "Thriller",
-    "War",
-    "Western",
+    "Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama",
+    "Family", "Fantasy", "History", "Horror", "Music", "Musical", "Mystery", "Romance",
+    "Sci-Fi", "Sport", "Thriller", "War", "Western",
   ];
 
   const historyList = [
-    "List 1",
-    "List 2",
-    "List 3",
-    "List 4",
-    "List 5",
-    "List 6",
-    "List 7",
-    "List 8",
-    "List 9",
-    "List 10",
+    "List 1", "List 2", "List 3", "List 4", "List 5",
+    "List 6", "List 7", "List 8", "List 9", "List 10",
   ];
 
-  useClickOutside([genreRef], () => setShowGenreDropdown(false));
-  useClickOutside([historyRef], () => setShowHistoryDropdown(false));
-  useClickOutside([profileRef], () => setShowProfileDropdown(false));
+  // Tutup dropdown jika klik di luar
+  useClickOutside([genreRef], () => activeDropdown === 'genre' && setActiveDropdown(null));
+  useClickOutside([historyRef], () => activeDropdown === 'history' && setActiveDropdown(null));
+  useClickOutside([profileRef], () => activeDropdown === 'profile' && setActiveDropdown(null));
   useClickOutside([mobileMenuRef], () => {
-    setShowMobileMenu(false);
-    document.body.style.overflow = "auto";
+    if (activeDropdown === 'mobile') {
+      setActiveDropdown(null);
+      document.body.style.overflow = "auto";
+    }
   });
 
+  // Spinner saat routing
   useEffect(() => {
     const handleStart = () => setLoading(true);
     const handleComplete = () => setLoading(false);
@@ -107,11 +82,9 @@ export default function Header() {
   };
 
   const handleMobileMenuToggle = () => {
-    setShowMobileMenu((prev) => {
-      const state = !prev;
-      document.body.style.overflow = state ? "hidden" : "auto";
-      return state;
-    });
+    const isOpening = activeDropdown !== 'mobile';
+    setActiveDropdown(isOpening ? 'mobile' : null);
+    document.body.style.overflow = isOpening ? "hidden" : "auto";
   };
 
   if (authLoading || loading) {
@@ -131,11 +104,11 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.container}>
         <div className={styles.logo}>
-          <Link href="/">STREAMAP</Link>
+          <Link href="/">STREAMAPP</Link>
         </div>
 
         <button className={styles.hamburger} onClick={handleMobileMenuToggle}>
-          {showMobileMenu ? <X size={28} /> : <Menu size={28} />}
+          {activeDropdown === 'mobile' ? <X size={28} /> : <Menu size={28} />}
         </button>
 
         <nav className={styles.nav}>
@@ -144,17 +117,17 @@ export default function Header() {
             historyRef={historyRef}
             genres={genres}
             historyList={historyList}
-            showGenreDropdown={showGenreDropdown}
-            setShowGenreDropdown={setShowGenreDropdown}
-            showHistoryDropdown={showHistoryDropdown}
-            setShowHistoryDropdown={setShowHistoryDropdown}
+            activeDropdown={activeDropdown}
+            setActiveDropdown={setActiveDropdown}
           />
         </nav>
 
         <div className={styles.actions}>
           <div className={styles.searchBox}>Search</div>
           <div className={styles.profile} ref={profileRef}>
-            <button onClick={() => setShowProfileDropdown((prev) => !prev)}>
+            <button onClick={() =>
+              setActiveDropdown(activeDropdown === 'profile' ? null : 'profile')
+            }>
               <Image
                 src="https://i.pravatar.cc/150?img=3"
                 alt="Profile"
@@ -163,7 +136,7 @@ export default function Header() {
                 className={styles.avatar}
               />
             </button>
-            {showProfileDropdown && (
+            {activeDropdown === 'profile' && (
               <ProfileDropdown
                 isLoggedIn={isLoggedIn}
                 handleLogout={handleLogout}
@@ -173,7 +146,7 @@ export default function Header() {
         </div>
       </div>
 
-      {showMobileMenu && (
+      {activeDropdown === 'mobile' && (
         <MobileMenu
           ref={mobileMenuRef}
           genres={genres}
@@ -181,7 +154,7 @@ export default function Header() {
           isLoggedIn={isLoggedIn}
           handleLogout={handleLogout}
           onClose={() => {
-            setShowMobileMenu(false);
+            setActiveDropdown(null);
             document.body.style.overflow = "auto";
           }}
         />
