@@ -8,6 +8,7 @@ import NewUpdateSection from "./components/homePage/Sections/NewUpdateSection";
 import TrendingSection from "./components/homePage/Sections/TrendingSection";
 import MovieOrSeriesSection from "./components/homePage/Sections/MovieOrSeriesSection";
 import AnimasiSection from "./components/homePage/Sections/AnimasiSection";
+import Ads from "./components/homePage/Sections/ads/Ads";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
         {/* Your main content here */}
         <HeroBanner />
         <NewUpdateSection />
+        <Ads />
         <TrendingSection />
         <MovieOrSeriesSection />
         <AnimasiSection />

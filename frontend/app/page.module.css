@@ -34,10 +34,10 @@
 } */
 
 /* body {
-  overflow: -moz-scrollbars-none; Old Firefox
-  -ms-overflow-style: none; IE/Edge
-}
-body::-webkit-scrollbar {
-  width: 0 !important; Chrome/Safari/Opera
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none; 
 } */
+body::-webkit-scrollbar {
+  width: 0 !important; /* Safari and Chrome */
+}
 
