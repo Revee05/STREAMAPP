@@ -7,18 +7,35 @@ const MobileMenu = forwardRef(function MobileMenu(
   ref
 ) {
   const [showMobileGenreDropdown, setShowMobileGenreDropdown] = useState(false);
-  const [showMobileHistoryDropdown, setShowMobileHistoryDropdown] = useState(false);
+  const [showMobileHistoryDropdown, setShowMobileHistoryDropdown] =
+    useState(false);
 
   return (
     <div className={styles.mobileMenu} ref={ref}>
       <ul>
-        <li><Link href="/" onClick={onClose}>Home</Link></li>
-        <li><Link href="/MovieAndSeries/movies" onClick={onClose}>Movies</Link></li>
-        <li><Link href="/MovieAndSeries/series" onClick={onClose}>Series</Link></li>
-        <li><Link href="/MyList" onClick={onClose}>MyList</Link></li>
+        <li>
+          <Link href="/" onClick={onClose}>
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link href="/MovieAndSeries/movies" onClick={onClose}>
+            Movies
+          </Link>
+        </li>
+        <li>
+          <Link href="/MovieAndSeries/series" onClick={onClose}>
+            Series
+          </Link>
+        </li>
+        <li>
+          <Link href="/MyList" onClick={onClose}>
+            MyList
+          </Link>
+        </li>
 
         <li className={styles.relative}>
-          <button onClick={() => setShowMobileGenreDropdown(prev => !prev)}>
+          <button onClick={() => setShowMobileGenreDropdown((prev) => !prev)}>
             Genre {showMobileGenreDropdown ? "▲" : "▼"}
           </button>
           {showMobileGenreDropdown && (
@@ -44,25 +61,40 @@ const MobileMenu = forwardRef(function MobileMenu(
         </li>
 
         <li>
-          <button onClick={() => setShowMobileHistoryDropdown(prev => !prev)}>
+          <button onClick={() => setShowMobileHistoryDropdown((prev) => !prev)}>
             History {showMobileHistoryDropdown ? "▲" : "▼"}
           </button>
           {showMobileHistoryDropdown && (
             <ul>
               {historyList.map((item, idx) => (
-                <li key={idx}><span>{item}</span></li>
+                <li key={idx}>
+                  <span>{item}</span>
+                </li>
               ))}
             </ul>
           )}
         </li>
 
         <li className={styles.searchBox}>Search</li>
-        <li><Link href="/profile" onClick={onClose}>Profile</Link></li>
+        <li>
+          <Link href="/profile" onClick={onClose}>
+            Profile
+          </Link>
+        </li>
         <li>
           {isLoggedIn ? (
-            <button onClick={() => { handleLogout(); onClose(); }}>Logout</button>
+            <button
+              onClick={() => {
+                handleLogout();
+                onClose();
+              }}
+            >
+              Logout
+            </button>
           ) : (
-            <Link href="/auth" onClick={onClose}>Login</Link>
+            <Link href="/auth" onClick={onClose}>
+              Login
+            </Link>
           )}
         </li>
       </ul>
