@@ -9,6 +9,7 @@ const genreRoutes = require('./routes/genreRoutes'); // Import genre routes
 const filmRoutes = require('./routes/filmRoutes'); // Import film routes
 const trendingRoutes = require("./routes/trendingRoutes"); // Import trending routes
 const seriesRoutes = require('./routes/seriesRoutes'); // Import series routes
+const adminRoutes = require('./routes/adminRoutes'); // Import admin routes
 
 const app = express();
 dotenv.config();
@@ -37,7 +38,7 @@ app.use('/api/trending', trendingRoutes); // Use trending routes
 app.use('/api/films', filmRoutes); // Use film routes
 app.use('/api/series', seriesRoutes); // Use series routes
 app.use('/api/user', userRoutes); // user routes
-
+app.use('/api/admin', adminRoutes); // admin routes
 
 const PORT = process.env.PORT;
 

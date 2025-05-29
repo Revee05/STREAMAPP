@@ -1,0 +1,11 @@
+### Admin Upload Video/Image to Supabase Storage
+POST http://localhost:8000/api/admin/upload
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsInVzZXJuYW1lIjoidGVzdDIiLCJlbWFpbCI6InRlc3QyQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODQ3ODcxNywiZXhwIjoxNzQ4NDc5NjE3fQ.g2PjILdVudU97LuH5goLe1Sf3JnD6h08MKdGo-4k87w
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="media"; filename="oprek_hp.jpg"
+Content-Type: video/mp4
+
+< C:\Users\HP\Documents\GitHub\STREAMAPP\backend\static\oprek_hp.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--

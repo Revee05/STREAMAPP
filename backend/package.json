@@ -22,6 +22,7 @@
     "express": "^4.21.2",
     "googleapis": "^148.0.0",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.0",
     "pg": "^8.14.1",
     "redis": "^4.7.0"
   }
