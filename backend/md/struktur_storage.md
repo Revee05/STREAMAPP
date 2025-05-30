@@ -27,7 +27,7 @@ hls/  => file zip harus nama movies
 │       └── season-2/
 │           └── ...
 ├── animations/
-│   ├── film/
+│   ├── movie/
 │   │   └── spirited-away-2001/
 │   │       ├── index.m3u8
 │   │       └── ...
@@ -42,12 +42,12 @@ hls/  => file zip harus nama movies
 => contoh struktur folder untuk file poster <=
 posters/
 ├── movies/
-│   └── avengers-endgame-2019.jpg
+│   └── avengers-endgame-2019.webp
 ├── series/
-│   └── the-office.jpg
+│   └── the-office.webp
 ├── animations/
-│   ├── film/
-│   │   └── spirited-away-2001.jpg
+│   ├── movie/
+│   │   └── spirited-away-2001.webp
 │   └── series/
-│       └── naruto.jpg
+│       └── naruto.webp
 
