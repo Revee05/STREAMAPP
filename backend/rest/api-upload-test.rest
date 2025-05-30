@@ -1,11 +1,23 @@
-### Admin Upload Video/Image to Supabase Storage
+### Admin Upload Media (Image/Video) to Supabase Storage
 POST http://localhost:8000/api/admin/upload
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsInVzZXJuYW1lIjoidGVzdDIiLCJlbWFpbCI6InRlc3QyQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODQ3ODcxNywiZXhwIjoxNzQ4NDc5NjE3fQ.g2PjILdVudU97LuH5goLe1Sf3JnD6h08MKdGo-4k87w
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsInVzZXJuYW1lIjoidGVzdDIiLCJlbWFpbCI6InRlc3QyQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODU3NjY3OSwiZXhwIjoxNzQ4NTc3NTc5fQ.R4u3aE2ogzi3mWMk8Rg22yq0tOAqcPo8WMn2wdgaGY4U4vvoabIoG6TOjqGPTxm3dTM2Q6xqJmka6ZKxMGqVfg
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="media"; filename="oprek_hp.jpg"
+Content-Disposition: form-data; name="file"; filename="oprek_hp.jpg"
+Content-Type: image/jpeg
+
+< ./static/oprek_hp.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Test Video Upload
+POST http://localhost:8000/api/admin/upload
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsInVzZXJuYW1lIjoidGVzdDIiLCJlbWFpbCI6InRlc3QyQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODU3NjY3OSwiZXhwIjoxNzQ4NTc3NTc5fQ.R4u3aE2ogzi3mWMk8Rg22yq0tOAqcPo8WMn2wdgaGY4U4vvoabIoG6TOjqGPTxm3dTM2Q6xqJmka6ZKxMGqVfg
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="drawing.mp4"
 Content-Type: video/mp4
 
-< C:\Users\HP\Documents\GitHub\STREAMAPP\backend\static\oprek_hp.jpg
+< ./static/drawing.mp4
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--

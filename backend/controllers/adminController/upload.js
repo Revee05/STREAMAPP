@@ -1,77 +1,87 @@
-const multer = require('multer');
-const { supabase } = require('../../config/suppabase');
-const path = require('path');
-const crypto = require('crypto');
+const multer = require("multer");
+const crypto = require("crypto");
+const path = require("path");
+const { supabase } = require("../../config/suppabase");
 
-// File filter to accept only images and videos
-const fileFilter = (req, file, cb) => {
-  const allowedTypes = /jpeg|jpg|png|gif|mp4|mov|avi|mkv/;
-  const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-  const mimetype = allowedTypes.test(file.mimetype);
-  if (extname && mimetype) {
-    return cb(null, true);
-  } else {
-    cb(new Error('Only images and videos are allowed'));
-  }
-};
-
-// Use memory storage to get file buffer for upload to Supabase
+// Konfigurasi multer dengan memory storage
 const storage = multer.memoryStorage();
-
 const upload = multer({
   storage: storage,
-  fileFilter: fileFilter,
-  limits: { fileSize: 1000 * 1000 * 100 } // 100MB limit
-}).single('media');
+  limits: { fileSize: 50 * 1024 * 1024 }, // Batas 50MB
+  fileFilter: function (req, file, cb) {
+    const allowedMimes = [
+      "image/jpeg",
+      "image/png",
+      "image/gif",
+      "video/mp4",
+      "video/quicktime",
+      "video/x-msvideo",
+    ];
+    if (allowedMimes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error("Invalid file type"));
+    }
+  },
+}).single("file");
 
 const uploadMedia = async (req, res) => {
-  upload(req, res, async function (err) {
-    if (err) {
-      return res.status(400).json({ message: err.message });
-    }
-    if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
-    }
+  try {
+    upload(req, res, async (err) => {
+      if (err) {
+        return res.status(400).json({ error: err.message });
+      }
 
-    try {
-      const fileExt = path.extname(req.file.originalname);
-      const fileName = crypto.randomBytes(16).toString('hex') + fileExt;
-      const fileBuffer = req.file.buffer;
+      const file = req.file;
+      if (!file) {
+        return res.status(400).json({ error: "Please upload a file" });
+      }
 
+      // Ambil bagian nama file tanpa ekstensi
+      const originalName = path.parse(file.originalname).name;
+      const fileExt = path.extname(file.originalname);
+      const safeName = originalName.substring(0, 50); // Batas 50 karakter agar aman
+
+      // Generate nama random
+      const randomStr = crypto.randomBytes(6).toString("hex");
+
+      // Gabungkan jadi nama file akhir
+      const fileName = `${safeName}_${randomStr}${fileExt}`;
+
+      // Gunakan bucket bernama "upload"
+      const bucket = "upload";
+
+      // Upload ke Supabase Storage
       const { data, error } = await supabase.storage
-        .from('upload')
-        .upload(fileName, fileBuffer, {
-          cacheControl: '3600',
+        .from(bucket)
+        .upload(fileName, file.buffer, {
+          contentType: file.mimetype,
+          cacheControl: "3600",
           upsert: false,
-          contentType: req.file.mimetype,
         });
 
       if (error) {
-        throw error;
+        return res.status(500).json({ error: error.message });
       }
 
-      // Get public URL
-      const { publicURL, error: urlError } = supabase.storage
-        .from('upload')
+      // Ambil public URL
+      const { data: publicData } = supabase.storage
+        .from(bucket)
         .getPublicUrl(fileName);
 
-      if (urlError) {
-        throw urlError;
-      }
-
       res.status(200).json({
-        message: 'File uploaded successfully',
-        file: {
+        success: true,
+        data: {
           fileName,
-          publicURL,
-          mimetype: req.file.mimetype,
-          size: req.file.size,
+          publicUrl: publicData.publicUrl,
+          fileType: file.mimetype,
+          size: file.size,
         },
       });
-    } catch (uploadError) {
-      res.status(500).json({ message: uploadError.message });
-    }
-  });
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 module.exports = { uploadMedia };

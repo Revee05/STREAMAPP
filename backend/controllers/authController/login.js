@@ -33,7 +33,7 @@ const login = async (req, res) => {
       secure: false, // Disable secure for development (http)
       sameSite: "Lax", // Use Lax for development to allow cookies in cross-site requests
       path: "/", // Make cookie available on all routes
-      maxAge: 15 * 60 * 1000,
+      maxAge: 12 * 60 * 60 * 1000, // 12 hours
     });
 
     res.cookie("refreshToken", refreshToken, {
