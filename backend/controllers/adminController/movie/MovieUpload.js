@@ -4,6 +4,7 @@ const fs = require("fs");
 const { supabase } = require("../../../config/suppabase");
 const AdmZip = require("adm-zip");
 const crypto = require("crypto");
+const { sequelize } = require("../../../config/sequelize");
 
 const storage = multer.memoryStorage();
 const upload = multer({
@@ -119,19 +120,100 @@ const movieUpload = async (req, res) => {
         };
       });
 
+      // Cari metadata.json dalam file yang diekstrak
+      const metadataFile = extractedFiles.find(f => 
+        path.basename(f).toLowerCase() === 'metadata.json'
+      );
+
+      if (!metadataFile) {
+        return res.status(400).json({ error: "metadata.json not found in zip" });
+      }
+
+      // Baca dan parse metadata
+      const metadata = JSON.parse(fs.readFileSync(metadataFile, 'utf8'));
+
+      // Upload files ke Supabase seperti sebelumnya
       let uploadResults;
       try {
         uploadResults = await Promise.all(uploadPromises);
-      } catch (uploadError) {
-        return res.status(500).json({ error: uploadError.message });
+        
+        // Cari URL poster dari hasil upload
+        const posterUrl = uploadResults.find(r => r.supabasePath.includes('poster'))?.publicUrl;
+        // Cari URL playlist m3u8 dari hasil upload
+        const filmsUrl = uploadResults.find(r => r.originalPath.endsWith('.m3u8'))?.publicUrl;
+
+        // Generate slug dari title
+        const slug = metadata.title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '');
+
+        // Insert ke database
+        const [film] = await sequelize.query(`
+          INSERT INTO films (
+            title, description, poster_url, release_year, 
+            release_month, release_day, films_url, slug
+          ) VALUES (
+            :title, :description, :posterUrl, :releaseYear,
+            :releaseMonth, :releaseDay, :filmsUrl, :slug
+          ) RETURNING id
+        `, {
+          replacements: {
+            title: metadata.title,
+            description: metadata.description,
+            posterUrl,
+            releaseYear: metadata.release_year,
+            releaseMonth: metadata.release_month,
+            releaseDay: metadata.release_day,
+            filmsUrl,
+            slug
+          },
+          type: sequelize.QueryTypes.INSERT
+        });
+
+        // Insert genres
+        if (metadata.genres && metadata.genres.length > 0) {
+          for (const genreName of metadata.genres) {
+            // Insert genre if not exists
+            await sequelize.query(`
+              INSERT INTO genres (name)
+              VALUES (:name)
+              ON CONFLICT (name) DO NOTHING
+            `, {
+              replacements: { name: genreName }
+            });
+
+            // Get genre id
+            const [genre] = await sequelize.query(`
+              SELECT id FROM genres WHERE name = :name
+            `, {
+              replacements: { name: genreName },
+              type: sequelize.QueryTypes.SELECT
+            });
+
+            // Insert film_genres relation
+            await sequelize.query(`
+              INSERT INTO film_genres (film_id, genre_id)
+              VALUES (:filmId, :genreId)
+            `, {
+              replacements: {
+                filmId: film.id,
+                genreId: genre.id
+              }
+            });
+          }
+        }
+
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
       }
 
       fs.rmSync(extractPath, { recursive: true, force: true });
 
       res.status(200).json({
         success: true,
-        message: "Files uploaded successfully",
-        data: uploadResults,
+        message: "Film uploaded successfully with metadata",
+        data: uploadResults
       });
     });
   } catch (error) {
